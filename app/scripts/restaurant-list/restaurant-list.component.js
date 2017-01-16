@@ -1,11 +1,12 @@
+'use strict';
+
 angular
 .module('restaurantList')
 .component('restaurantList', {
     template:
       '<ul>' +
       '<li ng-repeat="restaurant in $ctrl.restaurants">' +
-      '<span>{{restaurant.name}}</span>' +
-      '<p>{{restaurant.snippet}}</p>' +
+      '<a href="#!/restaurants/{{restaurant.id}}">{{restaurant.name}}</a>' +
       '</li>' +
       '</ul>',
     controller: function RestaurantListController($http) {
@@ -14,5 +15,6 @@ angular
         $http.get('api/restaurants').then(function(response) {
             self.restaurants = response.data;
         });
+
     }
 });

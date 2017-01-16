@@ -1,5 +1,5 @@
 {
-  "name": "meateor",
+  "name": "meateor-admin",
   "version": "1.0.0",
   "description": "Tinder for meals",
   "main": "server.js",
