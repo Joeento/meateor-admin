@@ -1,23 +1,22 @@
 'use strict';
 
-// Define the `phonecatApp` module
-var phonecatApp = angular.module('phonecatApp', []);
+// Define the `meateorAdminApp` module
+var meateorAdminApp = angular.module('meateorAdminApp', []);
 
-phonecatApp.
-component('phoneList', {
-  template:
-    '<ul>' +
-    '<li ng-repeat="phone in $ctrl.phones">' +
-    '<span>{{phone.name}}</span>' +
-    '<p>{{phone.snippet}}</p>' +
-    '</li>' +
-    '</ul>',
-  controller: function PhoneListController() {
-    var self = this;
+meateorAdminApp.
+component('restaurantList', {
+    template:
+      '<ul>' +
+      '<li ng-repeat="restaurant in $ctrl.restaurants">' +
+      '<span>{{restaurant.name}}</span>' +
+      '<p>{{restaurant.snippet}}</p>' +
+      '</li>' +
+      '</ul>',
+    controller: function RestaurantListController($http) {
+        var self = this;
 
-    $http.get('api/restaurants').then(function(response) {
-      console.log(response)
-      self.phones = response.data;
-    });
-  }
+        $http.get('api/restaurants').then(function(response) {
+            self.restaurants = response.data;
+        });
+    }
 });
