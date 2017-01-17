@@ -51,8 +51,8 @@ var request_yelp = function(set_parameters, callback) {
 
 		/* We set the require parameters here */
 	var required_parameters = {
-		oauth_consumer_key : config.oauth_consumer_key,
-		oauth_token : config.consumer_secret,
+		oauth_consumer_key : config.yelp.oauth_consumer_key,
+		oauth_token : config.yelp.oauth_token,
 		oauth_nonce : n(),
 		oauth_timestamp : n().toString().substr(0,10),
 		oauth_signature_method : 'HMAC-SHA1',
@@ -63,8 +63,8 @@ var request_yelp = function(set_parameters, callback) {
 	var parameters = _.assign(default_parameters, set_parameters, required_parameters);
 
 	/* We set our secrets here */
-	var consumerSecret = config.oauth_token;
-	var tokenSecret = config.token_secret;
+	var consumerSecret = config.yelp.consumer_secret;
+	var tokenSecret = config.yelp.token_secret;
 
 	/* Then we call Yelp's Oauth 1.0a server, and it returns a signature */
 	/* Note: This signature is only good for 300 seconds after the oauth_timestamp */
