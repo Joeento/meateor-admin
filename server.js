@@ -12,6 +12,7 @@ var qs = require('querystring');
 var _ = require('lodash');
 
 var url = require('url');
+var cheerio = require('cheerio');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +23,10 @@ var port = process.env.PORT || 3000;
 
 
 var router = express.Router();
+/* TODO:
+ * Handle yelp photo pagination
+ * Handle repeat photos
+ */
 
 /* Function for yelp call
  * ------------------------
@@ -91,6 +96,54 @@ router.get('/restaurants', function(req, res) {
 		var businesses = JSON.parse(body).businesses;
 		res.send(businesses);
 	});
+});
+
+router.get('/photo/:restarurantId', function(req, res) {
+	var photos_url = 'https://www.yelp.com/biz_photos/' + req.params.restarurantId;
+	request(photos_url, function(photos_error, photos_response, photos_html){
+        if(photos_error){
+			res.send({
+				'error': true,
+				'message': 'Unable to get photos'
+			});
+			return;
+        }
+
+        var $ = cheerio.load(photos_html);
+
+        /*
+        $('.photo-box-grid li').each(function(key, val) {
+			console.log($(val).attr('data-photo-id'));
+        });
+		*/
+
+		var photo_id = $('.photo-box-grid li').attr('data-photo-id');
+		var photo_url = 'https://www.yelp.com/biz_photos/' + req.params.restarurantId + '?select=' + photo_id;
+		request(photo_url, function(photo_error, photo_response, photo_html){
+			if(photo_error){
+				res.send({
+					'error': true,
+					'message': 'Unable to get photo caption.'
+				});
+				return;
+			}
+			var $ = cheerio.load(photo_html);
+
+			res.send({
+				id: photo_id,
+				image: photo_url,
+				caption: $('.selected-photo-caption-text').text().replace(/^\n[ ]+|[ ]*\n[ ]+$/g,'')
+			});
+		});
+
+		
+
+        
+    });
+});
+
+router.post('/photo', function(req, res) {
+	
 });
 
 
