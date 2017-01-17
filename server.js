@@ -131,7 +131,8 @@ router.get('/photo/:restarurantId', function(req, res) {
 
 			res.send({
 				id: photo_id,
-				image: photo_url,
+				yelp_url: photo_url,
+				photo_url: 'https://s3-media3.fl.yelpcdn.com/bphoto/' + photo_id + '/o.jpg',
 				caption: $('.selected-photo-caption-text').text().replace(/^\n[ ]+|[ ]*\n[ ]+$/g,'')
 			});
 		});
