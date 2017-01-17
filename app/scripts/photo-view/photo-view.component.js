@@ -9,9 +9,22 @@ component('photoView', {
 		this.restaurantId = $routeParams.restaurantId;
 		var self = this;
 
-		$http.get('api/photo/' + this.restaurantId).then(function(response) {
-			self.photo = response.data;
-		});
+		var loadPhoto = function() {
+			console.log('yes');
+			$http.get('api/photo/' + self.restaurantId).then(function(response) {
+				self.photo = response.data;
+			});
+		};
+
+		loadPhoto();
+		
+
+		self.approvePhoto = function() {
+			loadPhoto();
+		};
+		self.denyPhoto = function() {
+			loadPhoto();
+		};
 	}
 	]
 });

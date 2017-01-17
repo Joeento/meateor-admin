@@ -14,6 +14,8 @@ var _ = require('lodash');
 var url = require('url');
 var cheerio = require('cheerio');
 
+var config = require('./config');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -49,8 +51,8 @@ var request_yelp = function(set_parameters, callback) {
 
 		/* We set the require parameters here */
 	var required_parameters = {
-		oauth_consumer_key : 'csdi7F36hri2nUuaThDl-A',
-		oauth_token : 'vqhResGOIrAZ8EeXAWjOysxgh71EtWsx',
+		oauth_consumer_key : config.oauth_consumer_key,
+		oauth_token : config.consumer_secret,
 		oauth_nonce : n(),
 		oauth_timestamp : n().toString().substr(0,10),
 		oauth_signature_method : 'HMAC-SHA1',
@@ -61,8 +63,8 @@ var request_yelp = function(set_parameters, callback) {
 	var parameters = _.assign(default_parameters, set_parameters, required_parameters);
 
 	/* We set our secrets here */
-	var consumerSecret = '144rceddI0ZhzLMR9NMFwTx5qQU';
-	var tokenSecret = 'AOFFNT6qcOh-D82qxMNl2pjp3yY';
+	var consumerSecret = config.oauth_token;
+	var tokenSecret = config.token_secret;
 
 	/* Then we call Yelp's Oauth 1.0a server, and it returns a signature */
 	/* Note: This signature is only good for 300 seconds after the oauth_timestamp */
@@ -97,6 +99,7 @@ router.get('/restaurants', function(req, res) {
 		res.send(businesses);
 	});
 });
+
 
 router.get('/photo/:restarurantId', function(req, res) {
 	var photos_url = 'https://www.yelp.com/biz_photos/' + req.params.restarurantId;
