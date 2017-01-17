@@ -3,10 +3,10 @@
 angular.
   module('photoView').
   component('photoView', {
-    template: 'TBD: Detail view for <span>{{$ctrl.restaurantId}}</span>',
+    templateUrl: 'scripts/photo-view/photo-view.template.html',
     controller: ['$routeParams',
-      function PhotoViewController($routeParams) {
-        this.restaurantId = $routeParams.restaurantId;
-      }
+        function PhotoViewController($routeParams) {
+            this.restaurantId = $routeParams.restaurantId;
+        }
     ]
   });

@@ -3,12 +3,7 @@
 angular
 .module('restaurantList')
 .component('restaurantList', {
-    template:
-      '<ul>' +
-      '<li ng-repeat="restaurant in $ctrl.restaurants">' +
-      '<a href="#!/restaurants/{{restaurant.id}}">{{restaurant.name}}</a>' +
-      '</li>' +
-      '</ul>',
+    templateUrl: 'scripts/restaurant-list/restaurant-list.template.html',
     controller: function RestaurantListController($http) {
         var self = this;
 
