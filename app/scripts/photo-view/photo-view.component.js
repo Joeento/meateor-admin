@@ -22,7 +22,7 @@ component('photoView', {
 			
 			var photo_info = {
 				id: self.photo.id,
-				caption: self.caption,
+				caption: self.photo.caption,
 				restaurantId: this.restaurantId
 			};
 			$http.post('api/photo/', photo_info).then(function(response) {
