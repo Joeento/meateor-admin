@@ -2,7 +2,7 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <img ng-src="{{$ctrl.photo.photo_url}}" class="img-thumbnail" width="400" />
-	<p>{{$ctrl.photo.caption}}</p>
+	<textarea>{{$ctrl.photo.caption}}</textarea>
 	<div class="btn-group btn-group-lg" role="group" aria-label="...">
 		<button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="$ctrl.denyPhoto()"></span></button>
 		<button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true" ng-click="$ctrl.approvePhoto()"></span></button>

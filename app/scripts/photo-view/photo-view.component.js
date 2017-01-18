@@ -10,7 +10,6 @@ component('photoView', {
 		var self = this;
 
 		var loadPhoto = function() {
-			console.log('yes');
 			$http.get('api/photo/' + self.restaurantId).then(function(response) {
 				self.photo = response.data;
 			});
@@ -20,6 +19,15 @@ component('photoView', {
 		
 
 		self.approvePhoto = function() {
+			
+			var photo_info = {
+				id: self.photo.id,
+				caption: self.caption,
+				restaurantId: this.restaurantId
+			};
+			$http.post('api/photo/', photo_info).then(function(response) {
+				console.log('success');
+			});
 			loadPhoto();
 		};
 		self.denyPhoto = function() {
