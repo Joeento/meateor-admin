@@ -12,9 +12,11 @@ var qs = require('querystring');
 var _ = require('lodash');
 
 var url = require('url');
+var mongoose = require('mongoose');
 var cheerio = require('cheerio');
 
 var config = require('./config');
+var Photo = require('./models/Photo');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,8 +25,9 @@ app.use(express.static('public'));
 
 var port = process.env.PORT || 3000;
 
-
 var router = express.Router();
+
+mongoose.connect(config.mongo.url);
 /* TODO:
  * Handle yelp photo pagination
  * Handle repeat photos
@@ -139,15 +142,24 @@ router.get('/photo/:restarurantId', function(req, res) {
 				caption: $('.selected-photo-caption-text').text().replace(/^\n[ ]+|[ ]*\n[ ]+$/g,'')
 			});
 		});
-
-		
-
-        
     });
 });
 
 router.post('/photo', function(req, res) {
-	
+	var photo_info = req.body;
+
+	var photo = new Photo();
+	photo.yelp_id = req.body.id;
+    photo.caption = req.body.caption;
+    photo.restaurant_id = req.body.restaurantId;
+
+    photo.save(function(err) {
+		if (err)
+			res.send(err);
+
+		res.send({ message: 'Photo saved!' });
+    });
+
 });
 
 
