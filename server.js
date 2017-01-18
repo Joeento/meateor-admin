@@ -30,7 +30,9 @@ var router = express.Router();
 mongoose.connect(config.mongo.url);
 /* TODO:
  * Handle yelp photo pagination
- * Handle repeat photos
+ * Handle repeat rejected photos
+ * Find out why buttons don't always work
+ * Prevent buttons from submitting same image twice
  */
 
 /* Function for yelp call
@@ -163,6 +165,7 @@ router.post('/photo', function(req, res) {
 	photo.yelp_id = req.body.id;
     photo.caption = req.body.caption;
     photo.restaurant_id = req.body.restaurantId;
+    photo.approved = req.body.approved;
 
     photo.save(function(err) {
 		if (err)

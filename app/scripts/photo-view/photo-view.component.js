@@ -15,21 +15,26 @@ component('photoView', {
 			});
 		};
 
-		loadPhoto();
-		
-
-		self.approvePhoto = function() {
+		var savePhoto = function(approved) {
 			var photo_info = {
 				id: self.photo.id,
 				caption: self.photo.caption,
-				restaurantId: this.restaurantId
+				restaurantId: self.restaurantId,
+				approved: approved
 			};
 			$http.post('api/photo/', photo_info).then(function(response) {
 				loadPhoto();
 			});
+		};
+
+		loadPhoto();
+		self.approvePhoto = function() {
+			savePhoto(true);
+			loadPhoto();
 			
 		};
 		self.denyPhoto = function() {
+			savePhoto(false);
 			loadPhoto();
 		};
 	}
