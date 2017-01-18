@@ -1,11 +1,17 @@
 
 <div class="panel panel-default">
-  <div class="panel-body">
-    <img ng-src="{{$ctrl.photo.photo_url}}" class="img-thumbnail" width="400" />
-	<textarea ng-model="$ctrl.photo.caption">{{$ctrl.photo.caption}}</textarea>
-	<div class="btn-group btn-group-lg" role="group" aria-label="...">
-		<button class="btn btn-danger" type="submit" ng-click="$ctrl.denyPhoto()"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span></button>
-		<button class="btn btn-success" type="submit" ng-click="$ctrl.approvePhoto()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+	<div class="panel-body">
+		<div class="row">
+			<img ng-src="{{$ctrl.photo.photo_url}}" class="img-thumbnail" width="400" />
+		</div>
+		<div class="row">
+			<textarea cols="40" rows="2" ng-model="$ctrl.photo.caption">{{$ctrl.photo.caption}}</textarea>
+		</div>
+		<div class="row">
+			<div class="btn-group btn-group-lg" role="group" aria-label="...">
+				<button class="btn btn-danger" type="submit" ng-click="$ctrl.denyPhoto()"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span></button>
+				<button class="btn btn-success" type="submit" ng-click="$ctrl.approvePhoto()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+			</div>
+		</div>
 	</div>
-  </div>
 </div>
