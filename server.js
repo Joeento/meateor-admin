@@ -104,8 +104,8 @@ router.get('/restaurants', function(req, res) {
 });
 
 
-router.get('/photo/:restarurantId', function(req, res) {
-	var photos_url = 'https://www.yelp.com/biz_photos/' + req.params.restarurantId;
+router.get('/photo/:restaurantId', function(req, res) {
+	var photos_url = 'https://www.yelp.com/biz_photos/' + req.params.restaurantId;
 	request(photos_url, function(photos_error, photos_response, photos_html){
         if(photos_error){
 			res.send({
@@ -113,35 +113,46 @@ router.get('/photo/:restarurantId', function(req, res) {
 				'message': 'Unable to get photos'
 			});
 			return;
-        }
+		}
 
-        var $ = cheerio.load(photos_html);
+		var $ = cheerio.load(photos_html);
+		var photo_ids = [];
+		$('.photo-box-grid li').each(function(key, val) {
+			photo_ids.push($(val).attr('data-photo-id'));
+		});
 
-        /*
-        $('.photo-box-grid li').each(function(key, val) {
-			console.log($(val).attr('data-photo-id'));
-        });
-		*/
+		Photo.find({'restaurant_id': req.params.restaurantId}, function(err, used_photos) {
+			var used_photos_hash = {};
 
-		var photo_id = $('.photo-box-grid li').attr('data-photo-id');
-		var photo_url = 'https://www.yelp.com/biz_photos/' + req.params.restarurantId + '?select=' + photo_id;
-		request(photo_url, function(photo_error, photo_response, photo_html){
-			if(photo_error){
-				res.send({
-					'error': true,
-					'message': 'Unable to get photo caption.'
-				});
-				return;
+			for (var i = 0; i < used_photos.length; i++) {
+				used_photos_hash[used_photos[i].yelp_id] = true;
 			}
-			var $ = cheerio.load(photo_html);
+			var random_index = 0;
+			while (used_photos_hash[photo_ids[random_index]]) {
+				random_index = Math.floor(Math.random() * photo_ids.length);
+			}
+			var photo_id = photo_ids[random_index];
+			var photo_url = 'https://www.yelp.com/biz_photos/' + req.params.restaurantId + '?select=' + photo_id;
+			request(photo_url, function(photo_error, photo_response, photo_html){
+				if(photo_error){
+					res.send({
+						'error': true,
+						'message': 'Unable to get photo caption.'
+					});
+					return;
+				}
+				var $ = cheerio.load(photo_html);
 
-			res.send({
-				id: photo_id,
-				yelp_url: photo_url,
-				photo_url: 'https://s3-media3.fl.yelpcdn.com/bphoto/' + photo_id + '/o.jpg',
-				caption: $('.selected-photo-caption-text').text().replace(/^\n[ ]+|[ ]*\n[ ]+$/g,'')
+				res.send({
+					id: photo_id,
+					yelp_url: photo_url,
+					photo_url: 'https://s3-media3.fl.yelpcdn.com/bphoto/' + photo_id + '/o.jpg',
+					caption: $('.selected-photo-caption-text').text().replace(/^\n[ ]+|[ ]*\n[ ]+$/g,'')
+				});
 			});
 		});
+
+		
     });
 });
 

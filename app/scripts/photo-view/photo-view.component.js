@@ -19,16 +19,15 @@ component('photoView', {
 		
 
 		self.approvePhoto = function() {
-			
 			var photo_info = {
 				id: self.photo.id,
 				caption: self.photo.caption,
 				restaurantId: this.restaurantId
 			};
 			$http.post('api/photo/', photo_info).then(function(response) {
-				console.log('success');
+				loadPhoto();
 			});
-			loadPhoto();
+			
 		};
 		self.denyPhoto = function() {
 			loadPhoto();
