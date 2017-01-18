@@ -30,12 +30,10 @@ component('photoView', {
 		loadPhoto();
 		self.approvePhoto = function() {
 			savePhoto(true);
-			loadPhoto();
 			
 		};
 		self.denyPhoto = function() {
 			savePhoto(false);
-			loadPhoto();
 		};
 	}
 	]
