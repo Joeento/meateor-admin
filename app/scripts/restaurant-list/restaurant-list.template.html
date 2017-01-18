@@ -1,7 +1,9 @@
- <table class="table table-striped">
- 	<tr ng-repeat="restaurant in $ctrl.restaurants">
- 		<td>
- 			<a href="#!/restaurants/{{restaurant.id}}">{{restaurant.name}}</a> 
- 		</td>
- 	</tr>
-</table>
+<div class="panel panel-default">
+	<table class="table table-striped">
+		<tr ng-repeat="restaurant in $ctrl.restaurants">
+			<td>
+				<a href="#!/restaurants/{{restaurant.id}}">{{restaurant.name}}</a> 
+			</td>
+		</tr>
+	</table>
+</div>
