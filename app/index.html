@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<title>My HTML File</title>
 	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css" />
+	<script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="libs/bootstrap/dist/js/jquery.min.js"></script>
 	<script src="libs/angular/angular.js"></script>
 	<script src="libs/angular-route/angular-route.js"></script>
 	<script src="scripts/restaurant-list/restaurant-list.module.js"></script>
@@ -14,6 +16,42 @@
 	<script src="scripts/app.config.js"></script>
 </head>
 <body>
-	<div ng-view></div>
+
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Meateor Admin</a>
+			</div>
+
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="../navbar/">Default</a></li>
+				<li><a href="../navbar-static-top/">Static top</a></li>
+				<li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+			</ul>
+
+		</div>
+	</nav>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">.col-md-1</div>
+			<div class="col-md-9">
+				<div ng-view></div>
+			</div>
+		</div>
+		
+	</div>
 </body>
 </html>

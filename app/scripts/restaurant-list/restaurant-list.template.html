@@ -1,5 +1,7 @@
-<ul> 
-    <li ng-repeat="restaurant in $ctrl.restaurants"> 
-    	<a href="#!/restaurants/{{restaurant.id}}">{{restaurant.name}}</a> 
-    </li> 
- </ul>
+ <table class="table table-striped">
+ 	<tr ng-repeat="restaurant in $ctrl.restaurants">
+ 		<td>
+ 			<a href="#!/restaurants/{{restaurant.id}}">{{restaurant.name}}</a> 
+ 		</td>
+ 	</tr>
+</table>
