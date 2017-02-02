@@ -11,13 +11,13 @@ var request = require('request');
 var qs = require('querystring');
 var _ = require('lodash');
 
+var googleMaps = require('@google/maps');
 var url = require('url');
 var mongoose = require('mongoose');
 var cheerio = require('cheerio');
 
 var config = require('./config');
 var Photo = require('./models/Photo');
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -26,13 +26,15 @@ app.use(express.static('public'));
 var port = process.env.PORT || 3000;
 
 var router = express.Router();
-
 mongoose.connect(config.mongo.url);
+
+var mapsClient = googleMaps.createClient({
+	key: config.google.maps.key
+});
 /* TODO:
  * Handle yelp photo pagination
- * Handle repeat rejected photos
- * Find out why buttons don't always work
  * Prevent buttons from submitting same image twice
+ * 
  */
 
 /* Function for yelp call
@@ -178,6 +180,22 @@ router.post('/photo', function(req, res) {
 		res.send({ message: 'Photo saved!' });
     });
 
+});
+
+router.get('/city_autocomplete', function(req, res) {
+	mapsClient.places(
+		{
+			query: req.query.text,
+			type: '(cities)'
+		},
+		function(error, response){
+			if (error) {
+				res.send(error);
+			} else {
+				res.send(response.json.results.length > 0 ? response.json.results[0].formatted_address : {});
+			}
+			
+		});
 });
 
 
