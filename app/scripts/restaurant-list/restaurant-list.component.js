@@ -7,7 +7,7 @@ angular
     controller: function RestaurantListController($http) {
         var self = this;
 
-        $http.get('api/restaurants').then(function(response) {
+        $http.get('api/restaurants', {params: {location: 'San Francisco'}}).then(function(response) {
             self.restaurants = response.data;
         });
 

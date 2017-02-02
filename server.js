@@ -92,19 +92,23 @@ var request_yelp = function(set_parameters, callback) {
 };
 
 router.get('/restaurants', function(req, res) {
-	request_yelp({}, function(error, response, body) {
-		if (error) {
-			res.send({
-				'error': true,
-				'message': 'Unable to find any restaurants.'
-			});
-			return;
+	request_yelp(
+		{
+			location: req.query.location ? req.query.location : config.default_location
+		},
+		function(error, response, body) {
+			if (error) {
+				res.send({
+					'error': true,
+					'message': 'Unable to find any restaurants.'
+				});
+				return;
+			}
+			var businesses = JSON.parse(body).businesses;
+			res.send(businesses);
 		}
-		var businesses = JSON.parse(body).businesses;
-		res.send(businesses);
-	});
+	);
 });
-
 
 router.get('/photo/:restaurantId', function(req, res) {
 	var photos_url = 'https://www.yelp.com/biz_photos/' + req.params.restaurantId;
