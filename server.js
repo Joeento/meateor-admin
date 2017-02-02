@@ -94,7 +94,7 @@ var request_yelp = function(set_parameters, callback) {
 router.get('/restaurants', function(req, res) {
 	request_yelp(
 		{
-			location: req.query.location ? req.query.location : config.default_location
+			location: req.query.location ? req.query.location : config.defaults.location
 		},
 		function(error, response, body) {
 			if (error) {
