@@ -15,9 +15,5 @@ angular
 				self.restaurants = response.data;
 			});
 		};
-
-
-
-
 	}
 });

@@ -15,5 +15,10 @@
 				<a href="#!/restaurants/{{restaurant.id}}">{{restaurant.name}}</a> 
 			</td>
 		</tr>
+		<tr ng-show="!$ctrl.restaurants.length">
+			<td>
+				Please enter a valid city name above.
+			</td>
+		</tr>
 	</table>
 </div>
