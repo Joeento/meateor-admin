@@ -1,4 +1,14 @@
 <div class="panel panel-default">
+	<div class="panel-body">
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="city">Enter A City: </label>
+				<input type="text" g-places-autocomplete ng-model="city" options="$ctrl.search_options" />
+			</div>
+		</form>
+	</div>
+</div>
+<div class="panel panel-default">
 	<table class="table table-striped">
 		<tr ng-repeat="restaurant in $ctrl.restaurants">
 			<td>

@@ -11,5 +11,10 @@ angular
             self.restaurants = response.data;
         });
 
+
+		self.search_options = {
+			types: ['(cities)']
+		};
+
     }
 });
