@@ -182,23 +182,6 @@ router.post('/photo', function(req, res) {
 
 });
 
-router.get('/city_autocomplete', function(req, res) {
-	mapsClient.places(
-		{
-			query: req.query.text,
-			type: '(cities)'
-		},
-		function(error, response){
-			if (error) {
-				res.send(error);
-			} else {
-				res.send(response.json.results.length > 0 ? response.json.results[0].formatted_address : {});
-			}
-			
-		});
-});
-
-
 app.use('/api', router);
 
 app.use(express.static(__dirname + '/app'));
